@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/figureBouton">
+        <file>images/pierre_115.png</file>
+        <file>images/papier_115.png</file>
+        <file>images/ciseau_115.png</file>
+        <file>images/rien_115.png</file>
+    </qresource>
+</RCC>
