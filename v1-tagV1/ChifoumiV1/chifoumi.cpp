@@ -22,6 +22,7 @@ Chifoumi::Chifoumi():
 Chifoumi::~Chifoumi()
 {
     //dtor
+
 }
 
         /// Getters

@@ -111,7 +111,8 @@ release/qrc_images.cpp: ../ChifoumiV1/images.qrc \
 		../ChifoumiV1/images/papier_115.png \
 		../ChifoumiV1/images/pierre_115.png \
 		../ChifoumiV1/images/ciseau_115.png \
-		../ChifoumiV1/images/rien_115.png
+		../ChifoumiV1/images/rien_115.png \
+		../ChifoumiV1/images/versus_70.png
 	C:\Qt\Qt5.15.2\5.15.2\mingw81_64\bin\rcc.exe -name images ..\ChifoumiV1\images.qrc -o release\qrc_images.cpp
 
 compiler_moc_predefs_make_all: release/moc_predefs.h
@@ -518,7 +519,8 @@ release/chifoumivue.o: ../ChifoumiV1/chifoumivue.cpp ../ChifoumiV1/chifoumivue.h
 		C:/Qt/Qt5.15.2/5.15.2/mingw81_64/include/QtWidgets/QStatusBar \
 		C:/Qt/Qt5.15.2/5.15.2/mingw81_64/include/QtWidgets/qstatusbar.h \
 		C:/Qt/Qt5.15.2/5.15.2/mingw81_64/include/QtWidgets/QVBoxLayout \
-		C:/Qt/Qt5.15.2/5.15.2/mingw81_64/include/QtWidgets/QWidget
+		C:/Qt/Qt5.15.2/5.15.2/mingw81_64/include/QtWidgets/QWidget \
+		../ChifoumiV1/chifoumi.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\chifoumivue.o ..\ChifoumiV1\chifoumivue.cpp
 
 release/qrc_images.o: release/qrc_images.cpp 

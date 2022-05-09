@@ -35,13 +35,12 @@ class Chifoumi
         char determinerGagnant();
             /* détermine le gagnant 'J' pour joueur, 'M' pour machine, 'N' pour match nul
                en fonction du dernier coup joué par chacun d'eux */
-
-         ///* Méthodes utilitaires du Modèle
-    private :
         UnCoup genererUnCoup();
-    /* retourne une valeur aléatoire = pierre, papier ou ciseau.
+       /* retourne une valeur aléatoire = pierre, papier ou ciseau.
        Utilisée pour faire jouer la machine */
 
+
+         ///* Méthodes utilitaires du Modèle
         // Setters
     public:
         void setCoupJoueur(UnCoup p_coup);
@@ -77,6 +76,7 @@ class Chifoumi
         unsigned int scoreMachine;  // score actuel de la Machine
         UnCoup coupJoueur;          // dernier coup joué par le joueur
         UnCoup coupMachine;         // dernier coup joué par la machine
+
 };
 
 #endif // CHIFOUMI_H

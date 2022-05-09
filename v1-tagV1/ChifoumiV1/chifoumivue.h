@@ -2,11 +2,13 @@
 #define CHIFOUMIVUE_H
 
 #include <QMainWindow>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ChifoumiVue; }
 QT_END_NAMESPACE
 
+class Chifoumi;/**/
 class ChifoumiVue : public QMainWindow
 {
     Q_OBJECT
@@ -21,11 +23,11 @@ public slots:
     void choixPapier();
     void choixCiseau();
 
-
 private:
     Ui::ChifoumiVue *ui;
 
-    int scoreJ ;
-    int scoreM ;
+    int scoreJ ;/**/
+    int scoreM ;/**/
+    Chifoumi* tourmachine; /**/
 };
 #endif // CHIFOUMIVUE_H

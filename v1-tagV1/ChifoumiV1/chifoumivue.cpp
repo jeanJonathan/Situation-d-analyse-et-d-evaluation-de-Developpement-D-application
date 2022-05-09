@@ -2,11 +2,6 @@
 #include "ui_chifoumivue.h"
 #include "chifoumi.h"
 
-Chifoumi :: UnCoup  genererCoup();
-/* duplique la méthode privée de la classe Chifoumi,
-   pour ne pas modifier le code de la classe en la rendant publique
-*/
-
 ChifoumiVue::ChifoumiVue(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ChifoumiVue)
@@ -19,10 +14,10 @@ ChifoumiVue::ChifoumiVue(QWidget *parent)
     ui->figureJoueur->setPixmap(QPixmap(":/figureBouton/images/rien_115.png"));
     ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/rien_115.png"));
 
-
     ui->bPierre->setIcon(QPixmap(":/figureBouton/images/pierre_115.png"));
     ui->bPapier->setIcon(QPixmap(":/figureBouton/images/papier_115.png"));
     ui->bCiseau->setIcon(QPixmap(":/figureBouton/images/ciseau_115.png"));
+    ui->figureVersus->setPixmap(QPixmap(":/figureBouton/images/versus_70.png"));
 
     QString stringsScoreJ;
     QString stringsScoreM;
@@ -31,9 +26,9 @@ ChifoumiVue::ChifoumiVue(QWidget *parent)
     scoreM = 0;
 
     stringsScoreJ.setNum(scoreJ);
+    stringsScoreM.setNum(scoreM);
     ui->labelScoreJ->setText(stringsScoreJ);
     ui->labelScoreM->setText(stringsScoreM);
-
 
     // CONNEXION DES SIGNAUX ET SLOTS
     QObject::connect(ui->bNouvellePartie, SIGNAL(clicked()), this, SLOT(demanderNewPartie()));
@@ -47,68 +42,149 @@ ChifoumiVue::~ChifoumiVue()
     delete ui;
 }
 
-
 /* DEFINITION DES SLOTS*/
+
 void ChifoumiVue::demanderNewPartie()
 {
+    qDebug() << "Vous venez de demarrer une nouvelle partie" << Qt :: endl;
+    qDebug() << "L'etat du jeu est dans l'etat initial " << Qt :: endl;
     ui->bPierre->setEnabled(true);
     ui->bPapier->setEnabled(true);
     ui->bCiseau->setEnabled(true);
+
+    this->tourmachine->initScores();
+
+    QString stringsScoreJ;
+    QString stringsScoreM;
+
+    scoreJ = 0;
+    scoreM = 0;
+
+    stringsScoreJ.setNum(scoreJ);
+    stringsScoreM.setNum(scoreM);
+    ui->labelScoreJ->setText(stringsScoreJ);
+    ui->labelScoreM->setText(stringsScoreM);
+
+    ui->figureJoueur->setPixmap(QPixmap(":/figureBouton/images/rien_115.png"));
+    ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/rien_115.png"));
+
 }
 
-void ChifoumiVue::choixPierre()
-{
-    //Generation du coup Joueur
+void ChifoumiVue::choixPierre(){
+    qDebug() << "Vous avez choisir de jouer pierre " << Qt :: endl;
+    qDebug() << "La partie est en cours " << Qt :: endl;
+
     ui->figureJoueur->setPixmap(QPixmap(":/figureBouton/images/pierre_115.png"));
-
-    // Generer le coup machine pour faire jouer la machine...
-    Chifoumi tourMachine; //
-    Chifoumi :: UnCoup coupMachine;
-    tourMachine.setCoupMachine(genererCoup());
-    switch (coupMachine) {
-        case pierre :
-
-
-    }
-    tourMachine.majScores(tourMachine.determinerGagnant());
-}
-
-void ChifoumiVue::choixPapier()
-{
-    ui->figureJoueur->setPixmap(QPixmap(":/figureBouton/images/papier_115.png"));
-    // Generation de coup pour faire jouer la machine...
-}
-
-void ChifoumiVue::choixCiseau()
-{
-    ui->figureJoueur->setPixmap(QPixmap(":/figureBouton/images/ciseau_115.png"));
-    // Generation de coup pour faire jouer la machine...
-}
-
-int randMinMax(int min, int max){
-    /* pré-condition : min<max ;
-       Le nbre aléatoire est compris entre [min, max[ */
-   return rand()%(max-min) + min;
-}
-
-Chifoumi::UnCoup genererCoup()
-{
-    Chifoumi::UnCoup valeurGeneree;   // valeur à retourner
-    unsigned int nbAleatoire;
-    nbAleatoire = rand()%(4-1) + 1;
-    switch (nbAleatoire)
-    {
-    case 1 :
-        valeurGeneree = Chifoumi::pierre;
+    this->tourmachine->setCoupJoueur(Chifoumi :: UnCoup::pierre);
+    this->tourmachine->setCoupMachine(this->tourmachine->genererUnCoup());
+    switch (this->tourmachine->getCoupMachine()) {
+    case Chifoumi::UnCoup::pierre:
+        ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/pierre_115.png"));
         break;
-    case 2 :
-        valeurGeneree = Chifoumi::papier;
+
+    case Chifoumi::UnCoup::papier:
+        ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/papier_115.png"));
         break;
-    case 3 :
-        valeurGeneree = Chifoumi::ciseau;
+
+    case Chifoumi::UnCoup::ciseau:
+        ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/ciseau_115.png"));
         break;
+
     default:
         break;
     }
-    return valeurGeneree;
+    this->tourmachine->majScores(tourmachine->determinerGagnant());
+
+    QString stringsScoreJ;
+    QString stringsScoreM;
+
+    stringsScoreJ.setNum(this->tourmachine->getScoreJoueur());
+    stringsScoreM.setNum(this->tourmachine->getScoreMachine());
+
+    ui->labelScoreJ->setText(stringsScoreJ);
+    ui->labelScoreM->setText(stringsScoreM);
+
+    this->tourmachine->setScoreJoueur(this->tourmachine->getScoreJoueur());
+    this->tourmachine->setScoreMachine(this->tourmachine->getScoreMachine());
 }
+
+
+
+void ChifoumiVue::choixPapier(){
+    qDebug() << "Vous avez choisir de jouer papier. C'est au tour de la machine" << Qt :: endl;
+    qDebug() << "La partie est en cours " << Qt :: endl;
+
+    ui->figureJoueur->setPixmap(QPixmap(":/figureBouton/images/papier_115.png"));
+    this->tourmachine->setCoupJoueur(Chifoumi :: UnCoup::papier);
+    this->tourmachine->setCoupMachine(this->tourmachine->genererUnCoup());
+    switch (this->tourmachine->getCoupMachine()) {
+    case Chifoumi::UnCoup::pierre:
+        ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/pierre_115.png"));
+        break;
+
+    case Chifoumi::UnCoup::papier:
+        ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/papier_115.png"));
+        break;
+
+    case Chifoumi::UnCoup::ciseau:
+        ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/ciseau_115.png"));
+        break;
+
+    default:
+        break;
+    }
+
+    this->tourmachine->majScores(tourmachine->determinerGagnant());
+
+    QString stringsScoreJ;
+    QString stringsScoreM;
+
+    stringsScoreJ.setNum(this->tourmachine->getScoreJoueur());
+    stringsScoreM.setNum(this->tourmachine->getScoreMachine());
+
+    ui->labelScoreJ->setText(stringsScoreJ);
+    ui->labelScoreM->setText(stringsScoreM);
+
+    this->tourmachine->setScoreJoueur(this->tourmachine->getScoreJoueur());
+    this->tourmachine->setScoreMachine(this->tourmachine->getScoreMachine());
+}
+
+void ChifoumiVue::choixCiseau(){
+    qDebug() << "Vous avez choisir de jouer ciseau. C'est au tour de la machine" << Qt :: endl;
+    qDebug() << "La partie est en cours " << Qt :: endl;
+
+    ui->figureJoueur->setPixmap(QPixmap(":/figureBouton/images/ciseau_115.png"));
+    this->tourmachine->setCoupJoueur(Chifoumi :: UnCoup::ciseau);
+    this->tourmachine->setCoupMachine(this->tourmachine->genererUnCoup());
+    switch (this->tourmachine->getCoupMachine()) {
+    case Chifoumi::UnCoup::pierre:
+        ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/pierre_115.png"));
+        break;
+
+    case Chifoumi::UnCoup::papier:
+        ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/papier_115.png"));
+        break;
+
+    case Chifoumi::UnCoup::ciseau:
+        ui->figureMachine->setPixmap(QPixmap(":/figureBouton/images/ciseau_115.png"));
+        break;
+
+    default:
+        break;
+    }
+
+    this->tourmachine->majScores(tourmachine->determinerGagnant());
+
+    QString stringsScoreJ;
+    QString stringsScoreM;
+
+    stringsScoreJ.setNum(this->tourmachine->getScoreJoueur());
+    stringsScoreM.setNum(this->tourmachine->getScoreMachine());
+
+    ui->labelScoreJ->setText(stringsScoreJ);
+    ui->labelScoreM->setText(stringsScoreM);
+
+    this->tourmachine->setScoreJoueur(this->tourmachine->getScoreJoueur());
+    this->tourmachine->setScoreMachine(this->tourmachine->getScoreMachine());
+}
+
