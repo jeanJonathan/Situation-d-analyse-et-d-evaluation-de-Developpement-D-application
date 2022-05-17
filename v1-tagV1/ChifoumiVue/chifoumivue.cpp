@@ -125,6 +125,8 @@ void ChifoumiVue::nouvellePartie()
         getModele()->initScores();
         getModele()->initCoups();
         afficherValeursJoueurs();
+        ui->labelScoreJ->setStyleSheet("color:blue;");
+        ui->labelJ->setStyleSheet("color:blue;");
         majActivationBoutons(getEtat());
         break;
     case partieEnCours:
