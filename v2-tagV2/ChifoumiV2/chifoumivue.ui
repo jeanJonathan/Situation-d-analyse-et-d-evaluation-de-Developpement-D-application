@@ -54,12 +54,9 @@
            <property name="enabled">
             <bool>false</bool>
            </property>
-           <property name="text">
-            <string/>
-           </property>
            <property name="icon">
-            <iconset>
-             <normaloff>:/images/pierre_115.png</normaloff>:/images/pierre_115.png</iconset>
+            <iconset resource="ressources.qrc">
+             <normaloff>:/images/images/pierre_115.png</normaloff>:/images/images/pierre_115.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -87,8 +84,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>:/images/papier_115.png</normaloff>:/images/papier_115.png</iconset>
+            <iconset resource="ressources.qrc">
+             <normaloff>:/images/images/papier_115.png</normaloff>:/images/images/papier_115.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -116,8 +113,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>:/images/ciseau_115.png</normaloff>:/images/ciseau_115.png</iconset>
+            <iconset resource="ressources.qrc">
+             <normaloff>:/images/images/ciseau_115.png</normaloff>:/images/images/ciseau_115.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -176,7 +173,7 @@
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap>:/images/versus_70.png</pixmap>
+           <pixmap resource="ressources.qrc">:/images/images/versus_70.png</pixmap>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -184,7 +181,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="labelJoueur">
           <property name="text">
            <string>Vous</string>
           </property>
@@ -226,7 +223,7 @@
          </spacer>
         </item>
         <item row="0" column="5">
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="labelMachine">
           <property name="text">
            <string>Machine</string>
           </property>
@@ -246,9 +243,12 @@
          </widget>
         </item>
         <item row="2" column="5">
-         <widget class="QLabel" name="figureJoueur">
+         <widget class="QLabel" name="figureMachine">
           <property name="text">
-           <string>Choix machine</string>
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="ressources.qrc">:/images/images/rien.gif</pixmap>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -256,9 +256,12 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLabel" name="figureMachine">
+         <widget class="QLabel" name="figureJoueur">
           <property name="text">
-           <string>Choix joueur</string>
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="ressources.qrc">:/images/images/rien.gif</pixmap>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -316,6 +319,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

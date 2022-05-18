@@ -1,17 +1,13 @@
 #ifndef MODELE_H
 #define MODELE_H
 
-#include <QObject>
-
 class Modele
 {
-    Q_OBJECT
     ///* ---- PARTIE MODèLE ---------------------------
 public:
     Modele();
 
-
-        ///* Une définition de type énuméré
+       ///* Une définition de type énuméré
 public:
     enum UnCoup {pierre, papier, ciseau, rien};
     ///* Méthodes du Modèle

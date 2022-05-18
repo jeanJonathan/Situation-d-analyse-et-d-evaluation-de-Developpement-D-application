@@ -7,6 +7,12 @@ ChifoumiVue::ChifoumiVue(QWidget *parent)
     , ui(new Ui::ChifoumiVue)
 {
     ui->setupUi(this);
+
+    // connexions des boutons aux slots
+    connect(ui->bNouvellePartie, SIGNAL(clicked()), this, SLOT(demanderNouvellePartie()));
+    connect(ui->bPierre, SIGNAL(clicked()), this, SLOT(choisirPierre()));
+    connect(ui->bCiseau, SIGNAL(clicked()), this, SLOT(choisirCiseau()));
+    connect(ui->bPapier, SIGNAL(clicked()), this, SLOT(choisirPapier()));
 }
 
 ChifoumiVue::~ChifoumiVue()
@@ -14,6 +20,114 @@ ChifoumiVue::~ChifoumiVue()
     delete ui;
 }
 
+void ChifoumiVue::demanderNouvellePartie()
+{
+    laPresentation->demanderNouvellePartie();
+}
+
+Presentation *ChifoumiVue::getPresentation()
+{
+    return laPresentation;
+}
+
+void ChifoumiVue::choisirCiseau()
+{
+    laPresentation->choisirCiseau(); // Appel du choix ciseau de la presentation
+    ui->bNouvellePartie->setFocus();
+}
+
+void ChifoumiVue::choisirPierre()
+{
+    laPresentation->choisirPierre();
+    ui->bNouvellePartie->setFocus();
+}
+
+void ChifoumiVue::choisirPapier()
+{
+    laPresentation->choisirPapier();
+    ui->bNouvellePartie->setFocus();
+}
+
+void ChifoumiVue::setPresentation(Presentation *p_presentation)
+{
+    laPresentation = p_presentation;
+}
+
+QString ChifoumiVue::imageDernierCoup(Modele::UnCoup coupJoue)
+{
+    QString image = QString::fromUtf8(""); // valeur à retourner
+
+    switch(coupJoue)
+    {
+    case Modele::pierre:
+        image = ":/images/images/pierre_115.png";
+        break;
+    case Modele::papier:
+        image = ":/images/images/papier_115.png";
+        break;
+    case Modele::ciseau:
+        image = ":/images/images/ciseau_115.png";
+        break;
+    case Modele::rien:
+        image = ":/images/images/rien_115.png";
+        break;
+    default:
+        break;
+    }
+    return image;
+}
+
+void ChifoumiVue::majActivationBoutons(Presentation :: UnEtatJeu e)
+{
+    switch (e)
+   {
+   case Presentation::etatInitial:
+       ui->bCiseau->setEnabled(false);
+       ui->bPapier->setEnabled(false);
+       ui->bPierre->setEnabled(false);
+       ui->bNouvellePartie->setEnabled(true);
+       ui->bNouvellePartie->setFocus();
+       break;
+   case Presentation::partieEnCours:
+       ui->bCiseau->setEnabled(true);
+       ui->bPapier->setEnabled(true);
+       ui->bPierre->setEnabled(true);
+       ui->bNouvellePartie->setEnabled(true);
+       ui->bNouvellePartie->setFocus();
+       break;
+   default:
+       break;
+    }
+}
+
+void ChifoumiVue::modificationColor()
+{
+    ui->labelJoueur->setStyleSheet("color : blue");
+    ui->labelScoreJ->setStyleSheet("color : blue");
+}
+
+void ChifoumiVue::afficherScoreJoueur(unsigned int scoreJ)
+{
+    QString score = "";
+    ui->labelScoreJ->setText(score.number(scoreJ));
+}
+
+void ChifoumiVue::afficherScoreMachine(unsigned int scoreM)
+{
+    QString score = "";
+    ui->labelScoreM->setText(score.number(scoreM));
+}
+
+void ChifoumiVue::afficherCoupJoueur(Modele::UnCoup coupJ)
+{
+      ui->figureJoueur->setPixmap(QPixmap(imageDernierCoup(coupJ)));
+}
+
+void ChifoumiVue::afficherCoupMachine(Modele::UnCoup coupM)
+{
+    ui->figureMachine->setPixmap(QPixmap(imageDernierCoup(coupM)));
+}
+/*
 void ChifoumiVue::nvlleConnexion(QObject *c)
 {
     //pour se connecter avec la presentation
@@ -27,7 +141,8 @@ void ChifoumiVue::nvlleConnexion(QObject *c)
     c, SLOT(clickBoutonCiseau()));
 
 }
-
+*/
+/*
 void ChifoumiVue::supprConnexion(QObject *c)
 {
     //pour se déconnecter de c
@@ -40,135 +155,4 @@ void ChifoumiVue::supprConnexion(QObject *c)
     QObject::disconnect(ui->bCiseau, SIGNAL(clicked()),
     c, SLOT(clickBoutonCiseau()));
 }
-
-void ChifoumiVue::demanderNouvellePartie()
-{
-   laPresentation->newPartieDemandee();
-}
-
-void ChifoumiVue::coupJoueurJoue(Modele::UnCoup p_coup)
-{
-    laPresentation->coupJoueurJoue(p_coup);
-}
-
-Presentation *ChifoumiVue::getPresentation()
-{
-    return laPresentation;
-}
-
-void ChifoumiVue::setPresentation(Presentation *p_presentation)
-{
-    laPresentation = p_presentation;
-}
-
-
-void ChifoumiVue::setScoreJoueur(unsigned short int p_score)
-{
-    qDebug() << "scoreJoueur: " << p_score << Qt :: endl;
-}
-
-
-void ChifoumiVue::setScoreMachine(unsigned short int p_score)
-{
-
-    qDebug() << "scoreMachine: " << p_score << Qt :: endl;
-}
-
-
-void ChifoumiVue::setCoupJoueur(Modele::UnCoup p_coup)
-{
-    switch(p_coup)
-    {
-      case  Modele::ciseau :
-            qDebug() << "dernierCoupJoueur : CISEAU" << Qt :: endl;
-            break;
-      case Modele::papier :
-            qDebug() << "dernierCoupJoueur : PAPIER" << Qt :: endl;
-            break;
-      case Modele::pierre :
-            qDebug() << "dernierCoupJoueur : PIERRE" << Qt :: endl;
-            break;
-      default:
-            qDebug() << "dernierCoupJoueur : --" << Qt :: endl;
-            break;
-    }
-    qDebug() << Qt :: endl;
-}
-
-
-void ChifoumiVue::setCoupMachine(Modele::UnCoup p_coup)
-{
-    switch(p_coup)
-    {
-      case  Modele::ciseau :
-            qDebug() << "dernierCoupMachine : CISEAU" << Qt :: endl;
-            break;
-      case Modele::papier :
-            qDebug() << "dernierCoupMachine : PAPIER" << Qt :: endl;
-            break;
-      case Modele::pierre :
-            qDebug() << "dernierCoupMachine : PIERRE" << Qt :: endl;
-            break;
-      default:
-            qDebug() << "dernierCoupMachine : --" << Qt :: endl;
-            break;
-    }
-    qDebug() << Qt :: endl;
-}
-
-
-void ChifoumiVue::majInterface(Presentation::UnEtatJeu p_etat)
-{
-    switch(p_etat)
-    {
-      case Presentation::etatInitial :
-            qDebug() << "Interface conforme a : ETAT INITIAL" << Qt :: endl;
-            break;
-      case Presentation::partieEnCours :
-            qDebug() << "Interface conforme a : PARTIE EN COURS" << Qt :: endl;
-            break;
-      default: break;
-    }
-
-    qDebug() << Qt :: endl;
-}
-
-void ChifoumiVue::majInterface(Modele::UnCoup coup)
-{
-    switch (coup) {
-        case Modele::pierre:
-        /*Description des elements formuler dans le slots de la v1*/
-
-        break;
-        case Modele::pierre:
-
-        break;
-        case Modele::pierre:
-
-        break;
-    default:
-        break;
-    }
-}
-void ChifoumiVue::majActivationBoutons(Presentation :: UnEtatJeu e)
-{
-    switch (e)
-    {
-    case etatInitial:
-        ui->bCiseau->setEnabled(false);
-        ui->bPapier->setEnabled(false);
-        ui->bCiseau->setEnabled(false);
-        ui->bNouvellePartie->setEnabled(true);
-        ui->bNouvellePartie->setFocus();
-        break;
-    case partieEnCours:
-        ui->bCiseau->setEnabled(true);
-        ui->bPapier->setEnabled(true);
-        ui->bPierre->setEnabled(true);
-        ui->bNouvellePartie->setEnabled(true);
-        ui->bNouvellePartie->setFocus();
-        break;
-    default:
-        break;
-    }
-}
+*/

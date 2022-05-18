@@ -1,53 +1,59 @@
 #ifndef PRESENTATION_H
 #define PRESENTATION_H
+#include <QObject>
+#include <QDebug>
 
 #include "modele.h"
-
-class chifoumievue;
-class Presentation
+class ChifoumiVue;
+class Presentation : public QObject
 {
+    Q_OBJECT
 public:
-    Presentation();
+    explicit Presentation(QObject *parent = nullptr);
     ~Presentation();
 
-    explicit Presentation(Modele *m, QObject *parent = nullptr);
-
 public:
-    enum UnEtatJeu {etatInitial, partieEnCours};//
+    enum UnEtatJeu {etatInitial, partieEnCours};// Pour gerer l'etat du Jeu
 
 
     //Méthodes traitant les évènements du Jeu à interagir avec la Vue
 
-    void coupJoueurJoue(Modele::UnCoup p_coup);
-    /* Pour traiter les événements du Jeu pour indiquer à la vue que le Joueur à jouer*/
-    void newPartieDemandee();
-    /* Pour indiquer à la vue que le joueur a demandé une nouvelle partie*/
-    void notificationAccepter();/*Pour notifier l'action du joueur*/
-
     //Methode Getters et Setters de la Presentation
     UnEtatJeu getEtatJeu();
         // retourne l'état du jeu
-    chifoumievue* getVue();
+    ChifoumiVue* getVue();
         // retourne un pointeur sur la Vue
     Modele* getModele();
         // retourne un pointeur sur le Modèle
 
     void setEtatJeu(UnEtatJeu p_etat);
         // initialise l'attribut etatJeu
-    void setVue(chifoumievue* p_vue);
+    void setVue(ChifoumiVue* p_vue);
         // initialise l'attribut etatJeu
     void setModele(Modele* p_modele);
         // initialise l'attribut etatJeu
+    //void choisirCoup(Modele::UnCoup p_coup);
+
 public slots:
-    void clickBoutonPapier();
-    void clickBoutonPierre();
-    void clickBoutonCiseau();
-    void clickDemanderNewPartie();
+    void choisirPapier();
+    void choisirPierre();
+    void choisirCiseau();
+    void demanderNouvellePartie();
 
 private:
-    UnEtatJeu etatJeu;
-    chifoumievue* laVue;  // La fenetre principale de l'application
+    UnEtatJeu etatJeu; // Puisque c'est la presentation qui traite l'etat du jeu.
+                       //Pour transferer à la presentation la gestion du diagramme d'etat presentation
+    ChifoumiVue* laVue;  // La fenetre principale de l'application
     Modele* leModele;    // Pour pointer vers l'objet Modèle
 };
 
 #endif // PRESENTATION_H
+
+/*
+public slots:
+void choisirCoup(Modele::UnCoup p_coup);
+// remplacerait les 3 slots :
+void choisirPierre();
+void choisirPapier();
+void choisirCiseau();
+*/
