@@ -33,10 +33,11 @@ void ChifoumiVue::choisirQuitter()
 
 void ChifoumiVue::aProposDe()
 {
-    QMessageBox::information(this,"A propos de ...","Programme Modèle des étudiants\n"
+    QMessageBox::information(this,"A propos de ...","La version 3 du chifoumi 10/05/2022 \n"
                                                     "Auteur : \n"
-                                                    "-Jean-Jonathan KOFFI\n"
-                                                    "-Quentin ROBERT\n"
+                                                    "-Jean-Jonathan KOFFI \n"
+                                                    "-Quentin ROBERT \n"
+                                                    "-Maxime MOPTY \n"
                                                     ". ",QMessageBox::Ok);
     laPresentation->aProposDe();
 }

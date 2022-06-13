@@ -57,18 +57,3 @@ private:
     QString imageDernierCoup(Modele::UnCoup c);//
 };
 #endif // CHIFOUMIVUE_H
-
-
-/*
-void nvlleConnexion(QObject *c); //Pour interpeler la Présentation suite à une Connexion de l'utilisateur
-//
-void supprConnexion(QObject *c); //Pour interpeler la Présentation suite à une deconnexion de l'utilisateur
-//
-void majInterface(Modele ::UnCoup coup);
-
-public:
-    ///Méthodes  Controlant la Vue par la Presentation
-    void coupJoueurJoue(Modele::UnCoup p_coup);
-    // Pour interpeller la vue pour lui dire quelle figure (p_coup) a été choisie
-    void notificationAccepter();// Pour notifier l'action du joueur
-*/

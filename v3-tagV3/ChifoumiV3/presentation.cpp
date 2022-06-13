@@ -81,11 +81,14 @@ void Presentation::demanderNouvellePartie()
 void Presentation::choisirQuitter()
 {
     qDebug() << "je suis Presentation : bouton choisirQuitter cliqué " << Qt::endl;
+    // activité 4
+    setEtatJeu(etatFinal);
     laVue->close();
 }
 
 void Presentation::aProposDe()
 {
+    // activité 5
     qDebug() << "je suis Presentation : bouton aProposDe cliqué " << Qt::endl;
 }
 
@@ -169,10 +172,3 @@ void Presentation::choisirPapier()
         break;
     }
 }
-
-/*
-void Presentation::choisirCoup(Modele::UnCoup p_coup)
-{
-
-}
-*/
